@@ -21,3 +21,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::resource('shift','ShiftsController');
 Route::resource('department','DepartmentController');
 Route::resource('branch','BranchController');
+Route::resource('role','RolesController');
+Route::resource('permission','PermissionController');
