@@ -15,6 +15,7 @@ class RolesController extends Controller
     {
         //
         $role=Role::all();
+        $permission=Permission::all();
         return view('role.index',compact('role'));
     }
     /**
@@ -24,8 +25,8 @@ class RolesController extends Controller
      */
     public function create()
     {
-        //
-        return view('role.create');
+        $role=Role::all();;
+        return view('role.create',compact('role'));
     }
 
     /**
@@ -39,24 +40,62 @@ class RolesController extends Controller
         //
 
           //$shift = new Shift();
-          Role::create(request('role_name'))->save();
-          Permission::create(request('create','read','update','delete'))->save();
-          //Branch::create(request(['branch_name','location']));
-          return redirect('/role');
+        $role->name=request('name');
+        //$permission->name=(request('permission_create'));
+        if(request('create')){
+          $role->givePermissionTo('create');
         }
+        if(request('read')){
+          $role->givePermissionTo('read');
+        }
+        if(request('update')){
+          $role->givePermissionTo('update');
+        }
+        if(request('delete')){
+          $role->givePermissionTo('delete');
+        }
+        $role->save();
+        //$permission->save();
+        return redirect('/role');
+          }
         public function edit(Role $role)
         {
                return view('role.edit',compact('role'));
         }
         public function update(Role $role)
         {
-            $role->update(request(['shift_name','start_time','end_time']));
-            $shift->save();
+            $role->update(request(['name']));
+            if(request('create')){
+              $role->givePermissionTo('create');
+            }
+            if(!request('create')){
+            $role->revokePermissionTo('create');
+          }
+            if(request('read')){
+              $role->givePermissionTo('read');
+            }
+            if(!request('read')){
+            $role->revokePermissionTo('read');
+          }
+            if(request('update')){
+              $role->givePermissionTo('update');
+            }
+            if(!request('update')){
+            $role->revokePermissionTo('update');
+          }
+            if(request('delete')){
+              $role->givePermissionTo('delete');
+            }
+            if(!request('delete')){
+            $role->revokePermissionTo('delete');
+          }
+            $role->save();
             return redirect('/role');
         }
         public function destroy(Role $role)
         {
-          $shift->delete();
+          $role->delete();
+          $permission->delete();
           return redirect('/role');
         }
 }
