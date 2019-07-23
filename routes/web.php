@@ -17,7 +17,8 @@ Route::get('/', function () {
 
 Auth::routes();
 
-Route::get('/home', 'HomeController@index')->name('home');
+//Route::get('/home', 'HomeController@index')->name('home');
+Route::resource('home','HomeController');
 Route::resource('shift','ShiftsController');
 Route::resource('department','DepartmentController');
 Route::resource('branch','BranchController');

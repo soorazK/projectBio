@@ -1,5 +1,4 @@
 @extends('layouts.app')
-
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -15,6 +14,19 @@
                     @endif
 
                     You are logged in!
+           <h1> Please select the role for this new user: </h1>
+           <form action="/home" method="post">
+               {{ csrf_field() }}
+                    <label>Please Select the role: </label>
+
+                      <select name="role_select">
+                        <option>---ROLE---</option>
+                        @foreach($role as $roles)
+                        <option value="{{$roles->name}}">{{$roles->name}}</option>
+                        @endforeach
+                      </select>
+<input type="submit" value="Submit" class="btn btn-default" />
+                    </form>
                 </div>
             </div>
         </div>
