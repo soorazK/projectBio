@@ -5,6 +5,7 @@
         <div class="row">
             <div class="col-md-8 col-md-offset-2">
                 <div class="panel panel-default">
+
                     <div class="panel-heading">Roles</div> 
                     <a href="{{ route('role.create')}}" class="btn btn-default">Add New Roles</a>
                     @if ($errors->any())
@@ -13,14 +14,17 @@
                 @foreach ($errors->all() as $error)
                 <li>{{ $error }}</li>
                 @endforeach
+
+                    <div class="panel-heading">Roles</div>
+                    <a href="{{ route('role.create')}}" class="btn btn-default">Add New Roles</a>
+
             </ul>
         </div>
-        <br />
-        @endif
+        <br/>
 
                     <div class="panel-body">
-                      <form action="" method="post">
                         <table class="table table-bordered">
+
                             <thead>
                                 <tr>
                                     <th>Role name</th>
@@ -33,6 +37,7 @@
                                 </tr>
                             </thead>
                             <tbody>
+
                                @foreach($roles as $role)
                              
                             <form method="post" action="/role/{{$role->id}}">
@@ -63,6 +68,32 @@
                                 </tr>
 
                            
+
+                                @forelse($role as $roles)
+
+                                <tr>
+                                    <td>{{ $roles->name }}</td>
+                                  <td><input type="checkbox" {{$roles->hasPermissionTo('create')?'checked':''}}></td>
+                                  <td><input type="checkbox" {{$roles->hasPermissionTo('read')?'checked':''}}></td>
+                                  <td><input type="checkbox" {{$roles->hasPermissionTo('update')?'checked':''}}></td>
+                                  <td><input type="checkbox" {{$roles->hasPermissionTo('delete')?'checked':''}}></td>
+                                  <td>
+                                      <a href="/role/{{$roles->id}}/edit" class="btn btn-default">Edit</a>
+                                      <form action="/role/{{$roles->id}}" method="post"
+                                            style="display: inline"
+                                            onsubmit="return confirm('Are you sure?');">
+                                          {{method_field('delete')}}
+                                          {{ csrf_field() }}
+                                          <button class="btn btn-danger">Delete</button>
+                                      </form>
+                                  </td>
+                                </tr>
+                                @empty
+                                    <tr>
+                                        <td colspan="3">No entries found.</td>
+
+                                    </tr>
+                                    @endforelse
                             </tbody>
                         </table>
                     </div>
