@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Department;
-use App\Shift;
 
 class DepartmentController extends Controller
 {
@@ -15,9 +13,7 @@ class DepartmentController extends Controller
      */
     public function index()
     {
-
-        $departments=Department::all();
-        return view('department\index',compact('departments'));
+        //
     }
 
     /**
@@ -27,9 +23,7 @@ class DepartmentController extends Controller
      */
     public function create()
     {
-        $departments=Shift::all();
-        return view('department/create',compact('departments'));
-
+        //
     }
 
     /**
@@ -38,15 +32,9 @@ class DepartmentController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store()
+    public function store(Request $request)
     {
-        //return request()->all();
-        $departments=new Department;
-        $departments->department_name=request('department_name');
-        $departments->shift_id=request('shift_name');
-        $departments->save();
-        return redirect('/department');
-
+        //
     }
 
     /**
@@ -57,7 +45,7 @@ class DepartmentController extends Controller
      */
     public function show($id)
     {
-        return 'show';
+        //
     }
 
     /**
@@ -68,9 +56,7 @@ class DepartmentController extends Controller
      */
     public function edit($id)
     {
-       $department=Department::findOrFail($id);
-       //return $department;
-       return view('department/edit',compact('department'));
+        //
     }
 
     /**
@@ -80,13 +66,9 @@ class DepartmentController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update($id)
+    public function update(Request $request, $id)
     {
-        $department=new Department;
-        $department->department_name=update(request('department_name'));
-        $department->shift_id=update(request('shift_id'));
-        $department->save();
-        return redirect('/department');
+        //
     }
 
     /**
@@ -97,8 +79,6 @@ class DepartmentController extends Controller
      */
     public function destroy($id)
     {
-         Department::findOrFail($id)->delete();
-        
-        return redirect('/department');
+        //
     }
 }

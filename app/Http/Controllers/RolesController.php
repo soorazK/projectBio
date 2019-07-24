@@ -13,16 +13,10 @@ class RolesController extends Controller
      */
     public function index()
     {
-
-    
-        $roles=Role::all();
-        return view('role.index',compact('roles'));
-
         //
         $role=Role::all();
         $permission=Permission::all();
         return view('role.index',compact('role'));
-
     }
     /**
      * Show the form for creating a new resource.
@@ -65,17 +59,11 @@ class RolesController extends Controller
         return redirect('/role');
           }
         public function edit(Role $role)
-        {       
-               return 123;
+        {
                return view('role.edit',compact('role'));
         }
         public function update(Role $role)
         {
-
-            return 'updateFunctiom';
-            $role->update(request(['shift_name','start_time','end_time']));
-            $shift->save();
-
             $role->update(request(['name']));
             if(request('create')){
               $role->givePermissionTo('create');
@@ -102,7 +90,6 @@ class RolesController extends Controller
             $role->revokePermissionTo('delete');
           }
             $role->save();
-
             return redirect('/role');
         }
         public function destroy(Role $role)
